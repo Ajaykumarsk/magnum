@@ -7,10 +7,18 @@ import { PaginatedResponse, TableQueryParams } from '../../models/api-response.m
 @Injectable({
     providedIn: 'root'
 })
+/**
+ * Generic CRUD API service for communicating with paginated Django REST Framework endpoints.
+ */
 export class ApiService {
     private http = inject(HttpClient);
     private baseUrl = environment.apiUrl;
 
+    /**
+     * Fetches a paginated list of records from the given endpoint.
+     * @param endpoint Relative API endpoint path (e.g. 'masters/resource/plants')
+     * @param params Optional pagination, sorting, and filter query parameters
+     */
     getList<T>(endpoint: string, params?: TableQueryParams): Observable<PaginatedResponse<T>> {
         let httpParams = new HttpParams();
 
@@ -26,26 +34,34 @@ export class ApiService {
         return this.http.get<PaginatedResponse<T>>(`${this.baseUrl}/${endpoint}/`, { params: httpParams });
     }
 
+    /** Fetches a single record by ID. */
     getById<T>(endpoint: string, id: string | number): Observable<T> {
         return this.http.get<T>(`${this.baseUrl}/${endpoint}/${id}/`);
     }
 
+    /** Creates a new record at the given endpoint. */
     create<T>(endpoint: string, data: any): Observable<T> {
         return this.http.post<T>(`${this.baseUrl}/${endpoint}/`, data);
     }
 
+    /** Replaces an existing record by ID (PUT). */
     update<T>(endpoint: string, id: string | number, data: any): Observable<T> {
         return this.http.put<T>(`${this.baseUrl}/${endpoint}/${id}/`, data);
     }
 
+    /** Partially updates an existing record by ID (PATCH). */
     patch<T>(endpoint: string, id: string | number, data: any): Observable<T> {
         return this.http.patch<T>(`${this.baseUrl}/${endpoint}/${id}/`, data);
     }
 
+    /** Deletes a record by ID. */
     delete(endpoint: string, id: string | number): Observable<any> {
         return this.http.delete(`${this.baseUrl}/${endpoint}/${id}/`);
     }
 
+    /**
+     * Converts a PrimeNG table lazy-load event into DRF-compatible query parameters.
+     */
     buildTableParams(event: any, additionalFilters?: { [key: string]: any }): TableQueryParams {
         const params: TableQueryParams = {};
 

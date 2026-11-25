@@ -16,6 +16,9 @@ import { ApiResponse } from '../../models/api-response.model';
 @Injectable({
     providedIn: 'root'
 })
+/**
+ * Manages user authentication, JWT token lifecycle, and reactive auth state.
+ */
 export class AuthService {
     private http = inject(HttpClient);
     private router = inject(Router);
