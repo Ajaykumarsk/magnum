@@ -1,0 +1,32 @@
+@use './variables/_common';
+@use './variables/_light';
+@use './variables/_dark';
+@use './_mixins';
+@use './_preloading';
+@use './_core';
+@use './_main';
+@use './_topbar';
+@use './_menu';
+@use './_footer';
+@use './_responsive';
+@use './_utils';
+@use './_typography';
+
+
+/* Offset main content for 4.5rem slim sidebar */
+.layout-wrapper.layout-static.layout-static-inactive .layout-main-container {
+    margin-left: 4.5rem !important;
+    padding-top: 4rem;
+    transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.layout-wrapper.layout-static:not(.layout-static-inactive) .layout-main-container {
+    margin-left: 16rem !important;
+    padding-top: 4rem;
+    transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.layout-wrapper.layout-static .layout-topbar {
+    left: 0 !important;
+    width: 100% !important;
+}

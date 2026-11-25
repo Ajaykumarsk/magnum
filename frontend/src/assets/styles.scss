@@ -1,0 +1,132 @@
+@use 'primeicons/primeicons.css';
+@use '@/assets/layout/layout.scss';
+@use '@/assets/demo/demo.scss';
+
+/* Hide hamburger */
+.layout-topbar .layout-menu-button {
+    display: none !important;
+}
+
+.layout-topbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 4rem !important;
+    z-index: 999 !important;
+    background-color: var(--surface-card) !important;
+    border-bottom: 1px solid var(--surface-border) !important;
+}
+
+.layout-main-container {
+    padding: 5.25rem 1.5rem 1.5rem 1.5rem !important;
+    min-height: 100vh !important;
+    margin-left: 4.5rem !important;
+    transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Pinned or hover-expanded */
+.layout-wrapper.layout-static:not(.layout-static-inactive) .layout-main-container,
+.layout-wrapper.layout-sidebar-active .layout-main-container {
+    margin-left: 16rem !important;
+}
+
+/* Sidebar — always on-screen */
+.layout-sidebar {
+    position: fixed !important;
+    top: 4rem !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    height: calc(100vh - 4rem) !important;
+    width: 4.5rem !important;
+    background-color: #0f172a !important;
+    border-right: 1px solid #1e293b !important;
+    z-index: 998 !important;
+    margin: 0 !important;
+    padding: 0.5rem 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    transform: none !important; /* critical: never hide off-canvas */
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+}
+.layout-sidebar::-webkit-scrollbar { display: none !important; }
+
+/* Expanded width */
+.layout-wrapper.layout-static:not(.layout-static-inactive) .layout-sidebar,
+.layout-wrapper.layout-sidebar-active .layout-sidebar,
+.layout-sidebar:hover {
+    width: 16rem !important;
+}
+
+.layout-wrapper.layout-sidebar-active .layout-sidebar {
+    box-shadow: 6px 0 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Slim labels hidden */
+.layout-wrapper.layout-static.layout-static-inactive:not(.layout-sidebar-active) {
+    .layout-sidebar:not(:hover) {
+        .layout-menuitem-root-text,
+        .layout-menuitem-text,
+        .layout-submenu-toggler {
+            display: none !important;
+        }
+        .layout-menuitem-link {
+            justify-content: center !important;
+            padding: 0.75rem 0 !important;
+        }
+        .layout-menuitem-icon {
+            margin-right: 0 !important;
+        }
+    }
+}
+
+/* Menu item colors */
+.layout-sidebar {
+    .layout-menu {
+        padding: 0.5rem !important;
+        margin: 0 !important;
+        list-style: none !important;
+    }
+    .layout-menuitem-root-text {
+        color: #64748b !important;
+        font-size: 0.7rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin: 1.25rem 0 0.5rem 0.75rem !important;
+        white-space: nowrap;
+    }
+    .layout-menuitem-link {
+        color: #cbd5e1 !important;
+        border-radius: 8px !important;
+        margin-bottom: 2px;
+        padding: 0.65rem 0.85rem !important;
+        display: flex !important;
+        align-items: center !important;
+        transition: all 0.2s ease !important;
+        text-decoration: none !important;
+
+        &:hover, &.active-route {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+            color: #ffffff !important;
+            .layout-menuitem-icon { color: #38bdf8 !important; }
+        }
+    }
+    .layout-menuitem-icon {
+        color: #94a3b8 !important;
+        font-size: 1.2rem !important;
+        min-width: 1.75rem !important;
+        width: 1.75rem !important;
+        text-align: center;
+    }
+    .layout-submenu {
+        background: transparent !important;
+        padding-left: 0.5rem !important;
+        margin: 0 !important;
+        list-style: none !important;
+    }
+}

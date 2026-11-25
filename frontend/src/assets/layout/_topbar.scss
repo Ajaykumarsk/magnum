@@ -1,0 +1,250 @@
+@use 'mixins' as *;
+
+.layout-topbar {
+    position: fixed;
+    height: 4rem;
+    z-index: 997;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0 1.5rem;
+    background-color: var(--surface-card);
+    transition: left var(--layout-section-transition-duration);
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+
+    .layout-topbar-logo-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+        /* IMPORTANT: no fixed 20rem – that broke alignment with slim sidebar */
+        width: auto;
+        min-width: 0;
+    }
+
+    .layout-topbar-logo {
+        display: inline-flex;
+        align-items: center;
+        font-size: 1.5rem;
+        border-radius: var(--content-border-radius);
+        color: var(--text-color);
+        font-weight: 500;
+        gap: 0.5rem;
+        text-decoration: none;
+
+        svg {
+            width: 2.25rem;
+            height: auto;
+            flex-shrink: 0;
+        }
+
+        span {
+            white-space: nowrap;
+        }
+
+        &:focus-visible {
+            @include focused();
+        }
+    }
+
+    .layout-topbar-action {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+        color: var(--text-color);
+        transition: background-color var(--element-transition-duration);
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        padding: 0;
+        flex-shrink: 0;
+
+        &:hover {
+            background-color: var(--surface-hover);
+        }
+
+        &:focus-visible {
+            @include focused();
+        }
+
+        i {
+            font-size: 1.25rem;
+        }
+
+        span {
+            font-size: 1rem;
+            display: none; /* icon-only on desktop topbar */
+        }
+
+        &.layout-topbar-action-highlight {
+            background-color: var(--primary-color);
+            color: var(--primary-contrast-color);
+        }
+    }
+
+    .layout-menu-button {
+        margin-right: 0.75rem;
+    }
+
+    .layout-topbar-menu-button {
+        display: none;
+    }
+
+    .layout-topbar-actions {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-shrink: 0;
+    }
+
+    .layout-topbar-menu {
+        display: none; /* shown from lg via Tailwind/Prime utility in template */
+    }
+
+    .layout-topbar-menu-content {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .layout-config-menu {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+}
+
+/* Desktop: show calendar/messages text buttons as icons in a row */
+@media (min-width: 992px) {
+    .layout-topbar {
+        .layout-topbar-menu {
+            display: block;
+        }
+
+        .layout-topbar-menu .layout-topbar-action {
+            width: auto;
+            height: 2.5rem;
+            border-radius: var(--content-border-radius);
+            padding: 0 0.75rem;
+            gap: 0.5rem;
+
+            span {
+                display: inline;
+                font-size: 0.875rem;
+                font-weight: 500;
+            }
+
+            i {
+                font-size: 1.1rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    .layout-topbar {
+        padding: 0 1rem;
+
+        .layout-topbar-logo-container {
+            width: auto;
+        }
+
+        .layout-menu-button {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+
+        .layout-topbar-menu-button {
+            display: inline-flex;
+        }
+
+        .layout-topbar-menu {
+            position: absolute;
+            background-color: var(--surface-overlay);
+            transform-origin: top;
+            box-shadow:
+                0px 3px 5px rgba(0, 0, 0, 0.02),
+                0px 0px 2px rgba(0, 0, 0, 0.05),
+                0px 1px 4px rgba(0, 0, 0, 0.08);
+            border-radius: var(--content-border-radius);
+            padding: 1rem;
+            right: 1rem;
+            top: 4rem;
+            min-width: 15rem;
+            border: 1px solid var(--surface-border);
+            z-index: 1000;
+
+            .layout-topbar-menu-content {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .layout-topbar-action {
+                display: flex;
+                width: 100%;
+                height: auto;
+                justify-content: flex-start;
+                border-radius: var(--content-border-radius);
+                padding: 0.5rem 1rem;
+
+                i {
+                    font-size: 1rem;
+                    margin-right: 0.5rem;
+                }
+
+                span {
+                    font-weight: 500;
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+.config-panel {
+    .config-panel-label {
+        font-size: 0.875rem;
+        color: var(--text-secondary-color);
+        font-weight: 600;
+        line-height: 1;
+    }
+
+    .config-panel-colors {
+        > div {
+            padding-top: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            button {
+                border: none;
+                width: 1.25rem;
+                height: 1.25rem;
+                border-radius: 50%;
+                padding: 0;
+                cursor: pointer;
+                outline-color: transparent;
+                outline-width: 2px;
+                outline-style: solid;
+                outline-offset: 1px;
+
+                &.active-color {
+                    outline-color: var(--primary-color);
+                }
+            }
+        }
+    }
+
+    .config-panel-settings {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
